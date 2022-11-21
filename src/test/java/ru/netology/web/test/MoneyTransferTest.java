@@ -8,6 +8,7 @@ import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.LoginPage;
 import ru.netology.web.page.DashboardPage;
 import ru.netology.web.page.MoneyTransferPage;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -30,7 +31,7 @@ class MoneyTransferTest {
 
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var dashboardCardSecond = DataHelper.getInfoTransferFromSecondInit().getSumInit();
-        var dashboardCardFirst=DataHelper.getInfoTransferFromFirstInit().getSumInit();
+        var dashboardCardFirst = DataHelper.getInfoTransferFromFirstInit().getSumInit();
 
         var moneyTransferPage = dashboardPage.moneyTransferFirst();
         var balanceCurrentSecondCard = DataHelper.getInfoTransferFromSecondInit().getSumInit();
@@ -40,7 +41,6 @@ class MoneyTransferTest {
         var cardFrom = DataHelper.getInfoTransferFromSecondInit().getCardFrom();
         var infoTransferInit = DataHelper.getInfoTransferFromSecondInit();
         dashboardPage = moneyTransferPage.validTransfer(transferSum.toString(), infoTransferInit);
-
 
 
         var idCardFirst = DataHelper.getInfoBalanceCardFirst();
@@ -53,12 +53,6 @@ class MoneyTransferTest {
         //assertEquals(expectedSumCardFirst, actualSumCardFirst);
 
     }
-
-
-
-
-
-
 
 
 }
