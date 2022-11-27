@@ -48,9 +48,10 @@ class MoneyTransferTest {
 
         int expectedSumCardFirst = balanceCurrentFirstCard + transferSum.getSumTransfer();
         int expectedSumCardSecond = balanceCurrentSecondCard - transferSum.getSumTransfer();
-        var actualSumCardFirst = dashboardPage.getCardBalance(idCardFirst);
+        int actualSumCardFirst = dashboardPage.getCardBalance(idCardFirst);
         int actualSumCardSecond = dashboardPage.getCardBalance(idCardSecond);
         assertEquals(expectedSumCardFirst, actualSumCardFirst);
+        assertEquals(expectedSumCardSecond,actualSumCardSecond);
 
     }
 
