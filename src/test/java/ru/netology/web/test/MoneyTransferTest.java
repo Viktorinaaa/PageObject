@@ -33,12 +33,19 @@ class MoneyTransferTest {
         var dashboardCardSecond = DataHelper.getInfoTransferFromSecondInit().getSumInit();
         var dashboardCardFirst = DataHelper.getInfoTransferFromFirstInit().getSumInit();
 
-        var moneyTransferPage = dashboardPage.moneyTransferFirst();
+
+
+        //var moneyTransferPage = dashboardPage.moneyTransferFirst();
+        var cardFrom = DataHelper.getInfoTransferFromFirstInit(); //получаем сумму и номер 1 карты
+        var moneyTransferPage = dashboardPage.selectCardToTransfer(cardFrom); //
+
+
+
         var balanceCurrentSecondCard = DataHelper.getInfoTransferFromSecondInit().getSumInit();
         var balanceCurrentFirstCard = DataHelper.getInfoTransferFromFirstInit().getSumInit();
 
         var transferSum = DataHelper.getInfoTransfer(balanceCurrentSecondCard);
-        var cardFrom = DataHelper.getInfoTransferFromSecondInit().getCardFrom();
+        //var cardFrom = DataHelper.getInfoTransferFromSecondInit().getCardFrom();
         var infoTransferInit = DataHelper.getInfoTransferFromSecondInit();
         dashboardPage = moneyTransferPage.validTransfer(transferSum.toString(), infoTransferInit);
 
@@ -48,8 +55,14 @@ class MoneyTransferTest {
 
         int expectedSumCardFirst = balanceCurrentFirstCard + transferSum.getSumTransfer();
         int expectedSumCardSecond = balanceCurrentSecondCard - transferSum.getSumTransfer();
-        int actualSumCardFirst = dashboardPage.getCardBalance(idCardFirst);
-        int actualSumCardSecond = dashboardPage.getCardBalance(idCardSecond);
+
+
+        //int actualSumCardFirst = dashboardPage.getCardBalance(idCardFirst);
+        //int actualSumCardSecond = dashboardPage.getCardBalance(idCardSecond);
+        int actualSumCardFirst = dashboardPage.getOneCardBalance();
+        int actualSumCardSecond = dashboardPage.getTwoCardBalance();
+
+
         assertEquals(expectedSumCardFirst, actualSumCardFirst);
         assertEquals(expectedSumCardSecond,actualSumCardSecond);
 

@@ -3,23 +3,25 @@ package ru.netology.web.page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import lombok.Value;
 import lombok.val;
 import org.openqa.selenium.By;
 import ru.netology.web.data.DataHelper;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class DashboardPage {
-    private SelenideElement heading = $("[data-test-id=dashboard]");
-    private ElementsCollection cards = $$(".list__item div");
+    /*private SelenideElement heading = $("[data-test-id=dashboard]");
+    private ElementsCollection cards = $$("li.list__item");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
 
-    private SelenideElement cardFirst = $("[data-test-id=92df3f1c-a033-48e6-8390-206f6b1f56c0]");
-    private SelenideElement cardSecond= $("[data-test-id=0f3f5c2a-249e-4c3d-8287-09f7a039391d]");
+    //private SelenideElement cardFirst = $("[data-test-id=92df3f1c-a033-48e6-8390-206f6b1f56c0]");
+    //private SelenideElement cardSecond= $("[data-test-id=0f3f5c2a-249e-4c3d-8287-09f7a039391d]");
     private ElementsCollection buttonMoneyTransfer = $$("[data-test-id=action-deposit]");
 
 
@@ -64,5 +66,40 @@ public class DashboardPage {
         buttonMoneyTransfer.get(1).click();
         return new MoneyTransferPage();
     }
+*/
+    private SelenideElement heading = $("[data-test-id=dashboard]");
 
+    public DashboardPage() {
+        heading.shouldBe(visible);
+    }
+
+    private ElementsCollection cards = $$(".list__item");
+    private final String balanceStart = "баланс: ";
+    private final String balanceFinish = " р.";
+
+
+    public int getOneCardBalance() {
+        val text = cards.first().text();
+        return extractBalance(text);
+    }
+
+    public int getTwoCardBalance() {
+        val text = cards.last().text();
+        return extractBalance(text);
+    }
+
+    public MoneyTransferPage selectCardToTransfer(DataHelper.InfoTransferInit infoTransferInit) {
+        cards.findBy(text(infoTransferInit.getCardFrom().substring(12, 16))).$("button").click();
+        return new MoneyTransferPage();
+    }
+
+
+
+
+    private int extractBalance(String text) {
+        val start = text.indexOf(balanceStart);
+        val finish = text.indexOf(balanceFinish);
+        val value = text.substring(start + balanceStart.length(), finish);
+        return Integer.parseInt(value);
+    }
 }
