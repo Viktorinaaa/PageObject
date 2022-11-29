@@ -33,38 +33,25 @@ class MoneyTransferTest {
         var dashboardCardSecond = DataHelper.getInfoTransferFromSecondInit().getSumInit();
         var dashboardCardFirst = DataHelper.getInfoTransferFromFirstInit().getSumInit();
 
-
-
-        //var moneyTransferPage = dashboardPage.moneyTransferFirst();
-        var cardFrom = DataHelper.getInfoTransferFromFirstInit(); //получаем сумму и номер 1 карты
-        var moneyTransferPage = dashboardPage.selectCardToTransfer(cardFrom); //
-
-
-
+        var moneyTransferPage = dashboardPage.moneyTransferFirst();
         var balanceCurrentSecondCard = DataHelper.getInfoTransferFromSecondInit().getSumInit();
         var balanceCurrentFirstCard = DataHelper.getInfoTransferFromFirstInit().getSumInit();
 
         var transferSum = DataHelper.getInfoTransfer(balanceCurrentSecondCard);
-        //var cardFrom = DataHelper.getInfoTransferFromSecondInit().getCardFrom();
         var infoTransferInit = DataHelper.getInfoTransferFromSecondInit();
+
         dashboardPage = moneyTransferPage.validTransfer(transferSum.toString(), infoTransferInit);
-
-
-        var idCardFirst = DataHelper.getInfoBalanceCardFirst();
-        var idCardSecond = DataHelper.getInfoBalanceCardSecond();
+        var idCardFirst = DataHelper.getInfoBalanceCardFirst().getId();
+        var idCardSecond = DataHelper.getInfoBalanceCardSecond().getId();
 
         int expectedSumCardFirst = balanceCurrentFirstCard + transferSum.getSumTransfer();
         int expectedSumCardSecond = balanceCurrentSecondCard - transferSum.getSumTransfer();
 
-
-        //int actualSumCardFirst = dashboardPage.getCardBalance(idCardFirst);
-        //int actualSumCardSecond = dashboardPage.getCardBalance(idCardSecond);
-        int actualSumCardFirst = dashboardPage.getOneCardBalance();
-        int actualSumCardSecond = dashboardPage.getTwoCardBalance();
-
+        int actualSumCardFirst = dashboardPage.getCardBalance(idCardFirst);
+        int actualSumCardSecond = dashboardPage.getCardBalance(idCardSecond);
 
         assertEquals(expectedSumCardFirst, actualSumCardFirst);
-        assertEquals(expectedSumCardSecond,actualSumCardSecond);
+        assertEquals(expectedSumCardSecond, actualSumCardSecond);
 
     }
 
